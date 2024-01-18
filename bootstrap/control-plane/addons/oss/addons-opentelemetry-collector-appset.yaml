@@ -17,6 +17,7 @@ spec:
                 # anything not staging or prod use this version
                 addonChartVersion: 0.62.3
                 addonChartRepository: https://open-telemetry.github.io/opentelemetry-helm-charts
+                mode: deployment
               selector:
                 matchExpressions:
                   - key: akuity.io/argo-cd-cluster-name
