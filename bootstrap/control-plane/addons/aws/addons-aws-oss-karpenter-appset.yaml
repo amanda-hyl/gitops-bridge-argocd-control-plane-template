@@ -20,6 +20,8 @@ spec:
                 # argocd repo add public.ecr.aws --type helm --name aws-public-ecr --enable-oci
                 addonChartRepository: public.ecr.aws
               selector:
+                matchLabels:
+                  environment: dev
                 matchExpressions:
                   - key: akuity.io/argo-cd-cluster-name
                     operator: NotIn
