@@ -23,9 +23,6 @@ spec:
                 matchLabels:
                   environment: dev
                 matchExpressions:
-                  - key: akuity.io/argo-cd-cluster-name
-                    operator: NotIn
-                    values: [in-cluster]
                   - key: enable_karpenter
                     operator: In
                     values: ['true']
