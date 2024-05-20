@@ -4,68 +4,117 @@ kind: ApplicationSet
 metadata:
   name: addons-aws-external-dns
 spec:
-  goTemplate: true
   syncPolicy:
     preserveResourcesOnDeletion: true
   generators:
-    - merge:
-        mergeKeys: [server]
-        generators:
-          - clusters:
-              values:
-                addonChart: external-dns
-                # anything not staging or prod use this version
-                addonChartVersion: 1.13.1
-                addonChartRepository: https://kubernetes-sigs.github.io/external-dns
-              selector:
-                matchExpressions:
-                  - key: akuity.io/argo-cd-cluster-name
-                    operator: NotIn
-                    values: [in-cluster]
-                  - key: enable_external_dns
-                    operator: In
-                    values: ['true']
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: staging
-              values:
-                addonChartVersion: 1.13.1
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: prod
-              values:
-                addonChartVersion: 1.13.1
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: test-dev
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: test-sandbox
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: test
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: uat-dev
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: uat
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: svc-ap-southeast-2
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: svc-us-east-1
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: svc-us-west-2
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
+  - clusters:
+      values:
+        addonChartVersion: 1.14.3
+      selector:
+        matchLabels:
+          environment: prod
+        matchExpressions:
+          - key: enable_external_dns
+            operator: In
+            values: ['true']
   template:
     metadata:
-      name: 'addon-{{.name}}-{{.values.addonChart}}'
+      name: addon-external-dns
     spec:
       project: default
       sources:
         - repoURL: '{{.metadata.annotations.addons_repo_url}}'
           targetRevision: '{{.metadata.annotations.addons_repo_revision}}'
           ref: values
-        - chart: '{{.values.addonChart}}'
-          repoURL: '{{.values.addonChartRepository}}'
+        - chart: 'external-dns'
+          repoURL: 'https://kubernetes-sigs.github.io/external-dns'
           targetRevision: '{{.values.addonChartVersion}}'
           helm:
-            releaseName: '{{.values.addonChart}}'
+            releaseName: 'external-dns'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{.metadata.annotations.addons_repo_basepath}}/charts/addons/{{.values.addonChart}}/values.yaml
-              - $values/{{.metadata.annotations.addons_repo_basepath}}/environments/{{.metadata.labels.environment}}/addons/{{.values.addonChart}}/values.yaml
-              - $values/{{.metadata.annotations.addons_repo_basepath}}/clusters/{{.name}}/addons/{{.values.addonChart}}/values.yaml
-            values: |
-              provider: aws
-              serviceAccount:
-                name: {{.metadata.annotations.external_dns_service_account}}
-                annotations:
-                  eks.amazonaws.com/role-arn: {{.metadata.annotations.external_dns_iam_role_arn}}
-              domainFilters:
-                - {{default "" .metadata.annotations.eks_cluster_domain}}
-              txtOwnerId: {{.metadata.annotations.aws_cluster_name}}
-              policy: {{default "upsert-only" .metadata.annotations.external_dns_policy}}
+              - $values/{{metadata.annotations.addons_repo_basepath}}common/addons/external-dns/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}clusters/{{name}}/addons/external-dns/values.yaml
       destination:
         namespace: '{{.metadata.annotations.external_dns_namespace}}'
         name: '{{.name}}'
