@@ -53,7 +53,6 @@ spec:
             releaseName: '{{values.addonChart}}'
             values: |
               validatingWebhookCheckIgnoreFailurePolicy: {"openpolicyagent.org/webhook": Ignore}
-              mutatingWebhookExemptNamespacesLabels: {"openpolicyagent.org/webhook": Ignore}
               validatingWebhookCheckIgnoreFailurePolicy: Ignore
             ignoreMissingValueFiles: true
             valueFiles:
