@@ -51,9 +51,6 @@ spec:
           targetRevision: '{{values.addonChartVersion}}'
           helm:
             releaseName: '{{values.addonChart}}'
-            values: |
-              validatingWebhookCheckIgnoreFailurePolicy: {"openpolicyagent.org/webhook": Ignore}
-              validatingWebhookCheckIgnoreFailurePolicy: Ignore
             ignoreMissingValueFiles: true
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
