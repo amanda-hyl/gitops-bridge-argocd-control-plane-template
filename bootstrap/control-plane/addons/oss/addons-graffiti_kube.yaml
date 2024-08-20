@@ -12,8 +12,6 @@ spec:
       values:
         addonChartVersion: 3.12.0
       selector:
-        matchLabels:
-          environment: test-sandbox
         matchExpressions:
           - key: enable_graffiti_kube
             operator: In
