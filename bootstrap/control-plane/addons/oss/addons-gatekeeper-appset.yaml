@@ -52,7 +52,7 @@ spec:
           helm:
             releaseName: '{{values.addonChart}}'
             values: |
-              validatingWebhookExemptNamespacesLabels: - { key: openpolicyagent.org/webhook, values: ignore }
+              validatingWebhookExemptNamespacesLabels: { key: openpolicyagent.org/webhook, values: ignore }
               validatingWebhookCheckIgnoreFailurePolicy: Ignore
             ignoreMissingValueFiles: true
             valueFiles:
