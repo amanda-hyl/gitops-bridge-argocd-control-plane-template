@@ -52,7 +52,7 @@ spec:
           helm:
             releaseName: '{{values.addonChart}}'
             values: |
-              validatingWebhookExemptNamespacesLabels: { abc , xyz }
+              validatingWebhookExemptNamespacesLabels: { name: abc , value: xyz }
               validatingWebhookCheckIgnoreFailurePolicy: Ignore
             ignoreMissingValueFiles: true
             valueFiles:
