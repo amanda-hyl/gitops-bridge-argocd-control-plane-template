@@ -1,0 +1,6 @@
+priorityClasses:
+  - name: critical
+    description: "Mission critical Pods. Does preempt lower priority Pods."
+    globalDefault: false
+    preemptionPolicy: PreemptLowerPriority
+    value: 1000000
