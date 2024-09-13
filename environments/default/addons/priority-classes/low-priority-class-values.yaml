@@ -1,0 +1,6 @@
+priorityClasses:
+  - name: low
+    description: "Low priority Pods."
+    globalDefault: false
+    preemptionPolicy: Never
+    value: 100000

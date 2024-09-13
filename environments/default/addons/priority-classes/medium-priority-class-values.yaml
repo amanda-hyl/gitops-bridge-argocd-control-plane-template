@@ -1,0 +1,6 @@
+priorityClasses:
+  - name: medium
+    description: "Default priority class for all Pods. Does preempt lower priority Pods."
+    globalDefault: true
+    preemptionPolicy: PreemptLowerPriority
+    value: 500000
