@@ -24,23 +24,23 @@ spec:
                   - key: enable_priority_classes
                     operator: In
                     values: ['true']
-      - matrix:
-        generators:
-          - list:
-              elements:
-                - releaseName: critical-priority-class
-                - releaseName: medium-priority-class
-                - releaseName: low-priority-class
-          - clusters:
-              values:
-                addonChartVersion: 1.0.2
-              selector:
-                matchLabels:
-                  environment: test-dev
-                matchExpressions:
-                  - key: enable_priority_classes
-                    operator: In
-                    values: ['true']
+    - matrix:
+      generators:
+        - list:
+            elements:
+              - releaseName: critical-priority-class
+              - releaseName: medium-priority-class
+              - releaseName: low-priority-class
+        - clusters:
+            values:
+              addonChartVersion: 1.0.2
+            selector:
+              matchLabels:
+                environment: test-dev
+              matchExpressions:
+                - key: enable_priority_classes
+                  operator: In
+                  values: ['true']
     - matrix:
         generators:
           - list:
