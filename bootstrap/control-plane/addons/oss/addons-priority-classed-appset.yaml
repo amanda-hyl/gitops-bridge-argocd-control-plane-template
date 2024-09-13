@@ -25,22 +25,56 @@ spec:
                     operator: In
                     values: ['true']
     - matrix:
-      generators:
-        - list:
-            elements:
-              - releaseName: critical-priority-class
-              - releaseName: medium-priority-class
-              - releaseName: low-priority-class
-        - clusters:
-            values:
-              addonChartVersion: 1.0.2
-            selector:
-              matchLabels:
-                environment: test-dev
-              matchExpressions:
-                - key: enable_priority_classes
-                  operator: In
-                  values: ['true']
+        generators:
+          - list:
+              elements:
+                - releaseName: critical-priority-class
+                - releaseName: medium-priority-class
+                - releaseName: low-priority-class
+          - clusters:
+              values:
+                addonChartVersion: 1.0.2
+              selector:
+                matchLabels:
+                  environment: test-sandbox
+                matchExpressions:
+                  - key: enable_priority_classes
+                    operator: In
+                    values: ['true']
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - releaseName: critical-priority-class
+                - releaseName: medium-priority-class
+                - releaseName: low-priority-class
+          - clusters:
+              values:
+                addonChartVersion: 1.0.2
+              selector:
+                matchLabels:
+                  environment: test-tenent
+                matchExpressions:
+                  - key: enable_priority_classes
+                    operator: In
+                    values: ['true']
+    - matrix:
+        generators:
+          - list:
+              elements:
+                - releaseName: critical-priority-class
+                - releaseName: medium-priority-class
+                - releaseName: low-priority-class
+          - clusters:
+              values:
+                addonChartVersion: 1.0.2
+              selector:
+                matchLabels:
+                  environment: uat-test
+                matchExpressions:
+                  - key: enable_priority_classes
+                    operator: In
+                    values: ['true']
     - matrix:
         generators:
           - list:
@@ -58,7 +92,7 @@ spec:
                   - key: enable_priority_classes
                     operator: In
                     values: ['true']
-      - matrix:
+    - matrix:
         generators:
           - list:
               elements:
@@ -70,7 +104,7 @@ spec:
                 addonChartVersion: 1.0.2
               selector:
                 matchLabels:
-                  environment: uat-dev
+                  environment: ap-southeast-2
                 matchExpressions:
                   - key: enable_priority_classes
                     operator: In
@@ -87,12 +121,12 @@ spec:
                 addonChartVersion: 1.0.2
               selector:
                 matchLabels:
-                  environment: svc-test
+                  environment: us-east-1
                 matchExpressions:
                   - key: enable_priority_classes
                     operator: In
                     values: ['true']
-      - matrix:
+    - matrix:
         generators:
           - list:
               elements:
@@ -104,24 +138,7 @@ spec:
                 addonChartVersion: 1.0.2
               selector:
                 matchLabels:
-                  environment: svc-uat
-                matchExpressions:
-                  - key: enable_priority_classes
-                    operator: In
-                    values: ['true']
-      - matrix:
-        generators:
-          - list:
-              elements:
-                - releaseName: critical-priority-class
-                - releaseName: medium-priority-class
-                - releaseName: low-priority-class
-          - clusters:
-              values:
-                addonChartVersion: 1.0.2
-              selector:
-                matchLabels:
-                  environment: svc-prod
+                  environment: us-west-2
                 matchExpressions:
                   - key: enable_priority_classes
                     operator: In
