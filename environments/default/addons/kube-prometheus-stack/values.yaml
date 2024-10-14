@@ -1,11 +1,8 @@
 # Helm chart values
 alertmanager:
-  extraSecretMounts:
-    - name: alertmanager-pagerduty-plain-secret
-      mountPath: /etc/alertmanager-pagerduty-plain-secret
-      subPath: ""
-      secretName: alertmanager-pagerduty-plain-secret
-      readOnly: true
+  alertmanagerSpec:
+    secrets:
+      - alertmanager-pagerduty-plain-secret
   config:
     global:
       resolve_timeout: 5m
@@ -19,4 +16,4 @@ alertmanager:
     receivers:
       - name: 'pagerduty'
         pagerduty_configs:
-          - service_key_file: /etc/alertmanager-pagerduty-plain-secret/pagerduty_key
+          - routing_key_file: '/etc/alertmanager/secrets/alertmanager-pagerduty-plain-secret/pagerduty_key'
