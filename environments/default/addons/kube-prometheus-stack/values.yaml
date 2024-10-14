@@ -22,4 +22,4 @@ alertmanager:
     receivers:
       - name: 'pagerduty'
         pagerduty_configs:
-          - service_key_file: /etc/secrets/pagerduty/PAGERDUTY_KEY
+          - service_key_file: /etc/secrets/pagerduty/pagerduty_key
