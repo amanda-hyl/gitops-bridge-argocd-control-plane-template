@@ -1,1 +1,25 @@
 # Helm chart values
+alertmanager:
+  extraVolumeMounts:
+    - name: pagerduty-secret
+      mountPath: /etc/secrets/pagerduty
+      readOnly: true
+
+  extraVolumes:
+    - name: pagerduty-secret
+      secret:
+        secretName: alertmanager-pagerduty-secret
+  config:
+    global:
+      resolve_timeout: 5m
+    route:
+      group_by: ['alertname', 'job']
+      group_wait: 30s
+      group_interval: 5m
+      repeat_interval: 12h
+      receiver: 'pagerduty'
+
+    receivers:
+      - name: 'pagerduty'
+        pagerduty_configs:
+          - service_key_file: /etc/secrets/pagerduty/PAGERDUTY_KEY
