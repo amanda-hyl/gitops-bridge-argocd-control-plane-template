@@ -1,14 +1,9 @@
 # Helm chart values
+prometheusSpec:
+  additionalAlertManagerConfigsSecret:
+    name: alertmanager-pagerduty-secret
+    key: pagerduty_key
 alertmanager:
-  extraVolumeMounts:
-    - name: pagerduty-secret
-      mountPath: /etc/secrets/pagerduty
-      readOnly: true
-
-  extraVolumes:
-    - name: pagerduty-secret
-      secret:
-        secretName: alertmanager-pagerduty-secret
   config:
     global:
       resolve_timeout: 5m
