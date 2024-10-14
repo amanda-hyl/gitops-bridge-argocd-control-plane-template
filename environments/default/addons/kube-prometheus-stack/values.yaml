@@ -2,7 +2,7 @@
 prometheus:
   prometheusSpec:
     additionalAlertManagerConfigsSecret:
-      name: alertmanager-pagerduty-secret
+      name: alertmanager-pagerduty-plain-secret
       key: pagerduty_key
 alertmanager:
   config:
