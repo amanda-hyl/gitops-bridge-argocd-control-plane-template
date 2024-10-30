@@ -40,7 +40,7 @@ spec:
                 addonChartVersion: v1.13.1
   template:
     metadata:
-      name: addon-{{name}}-{{values.addonChart}}
+      name: addon-{{values.addonChart}}
     spec:
       project: default
       sources:
