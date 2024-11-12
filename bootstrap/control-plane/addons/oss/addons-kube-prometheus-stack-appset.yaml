@@ -11,8 +11,8 @@ spec:
         generators:
           - list:
               elements:
-                - releaseNameSuffix: replica1
                 - releaseNameSuffix: replica2
+                - releaseNameSuffix: replica1
           - clusters:
               values:
                 addonChart: kube-prometheus-stack
