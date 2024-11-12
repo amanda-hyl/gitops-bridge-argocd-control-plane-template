@@ -1,1 +1,3 @@
 nameOverride: "kube-prometheus-stack-replica2"
+prometheus:
+  serviceAccountName: "kube-prometheus-stack-replica2-sa"
