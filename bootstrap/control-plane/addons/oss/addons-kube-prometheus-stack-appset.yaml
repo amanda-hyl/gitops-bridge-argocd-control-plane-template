@@ -55,7 +55,7 @@ spec:
             releaseName: '{{values.addonChart}}-{{releaseNameSuffix}}'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values-{{releaseNameSuffix}}.yaml
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
