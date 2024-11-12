@@ -1,4 +1,3 @@
-
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -6,14 +5,11 @@ metadata:
   name: addons-kube-prometheus-stack
 spec:
   syncPolicy:
-    preserveResourcesOnDeletion: false
+    preserveResourcesOnDeletion: true
   generators:
-    - matrix:
+    - merge:
+        mergeKeys: [server]
         generators:
-          - list:
-              elements:
-                - releaseNameSuffix: replica2
-                - releaseNameSuffix: replica1
           - clusters:
               values:
                 addonChart: kube-prometheus-stack
@@ -28,21 +24,21 @@ spec:
                   - key: enable_kube_prometheus_stack
                     operator: In
                     values: ['true']
-          # - clusters:
-          #     selector:
-          #       matchLabels:
-          #         environment: staging
-          #     values:
-          #       addonChartVersion: 51.2.0
-          # - clusters:
-          #     selector:
-          #       matchLabels:
-          #         environment: prod
-          #     values:
-          #       addonChartVersion: 51.2.0
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: staging
+              values:
+                addonChartVersion: 51.2.0
+          - clusters:
+              selector:
+                matchLabels:
+                  environment: prod
+              values:
+                addonChartVersion: 51.2.0
   template:
     metadata:
-      name: addon-{{values.addonChart}}-{{releaseNameSuffix}}
+      name: addon-{{values.addonChart}}
     spec:
       project: default
       sources:
@@ -53,10 +49,10 @@ spec:
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
-            releaseName: '{{values.addonChart}}-{{releaseNameSuffix}}'
+            releaseName: '{{values.addonChart}}'
             ignoreMissingValueFiles: true
             valueFiles:
-              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values-{{releaseNameSuffix}}.yaml
+              - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
