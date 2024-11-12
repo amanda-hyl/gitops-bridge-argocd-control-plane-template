@@ -53,13 +53,6 @@ spec:
             ignoreMissingValueFiles: true
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
-            values: |
-              alertmanager:
-                enabled:false
-              kubeStateMetrics:
-                enabled:false
-              nodeExporter:
-                enabled: false
       destination:
         namespace: '{{values.addonChart}}'
         name: '{{name}}'
