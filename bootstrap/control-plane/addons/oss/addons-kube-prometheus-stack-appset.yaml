@@ -7,9 +7,12 @@ spec:
   syncPolicy:
     preserveResourcesOnDeletion: true
   generators:
-    - merge:
-        mergeKeys: [server]
+    - matrix:
         generators:
+          - list:
+              elements:
+                - releaseNameSuffix: replica1
+                - releaseNameSuffix: replica2
           - clusters:
               values:
                 addonChart: kube-prometheus-stack
@@ -24,21 +27,21 @@ spec:
                   - key: enable_kube_prometheus_stack
                     operator: In
                     values: ['true']
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: staging
-              values:
-                addonChartVersion: 51.2.0
-          - clusters:
-              selector:
-                matchLabels:
-                  environment: prod
-              values:
-                addonChartVersion: 51.2.0
+          # - clusters:
+          #     selector:
+          #       matchLabels:
+          #         environment: staging
+          #     values:
+          #       addonChartVersion: 51.2.0
+          # - clusters:
+          #     selector:
+          #       matchLabels:
+          #         environment: prod
+          #     values:
+          #       addonChartVersion: 51.2.0
   template:
     metadata:
-      name: addon-{{values.addonChart}}
+      name: addon-{{values.addonChart}}-{{releaseNameSuffix}}
     spec:
       project: default
       sources:
@@ -49,7 +52,7 @@ spec:
           repoURL: '{{values.addonChartRepository}}'
           targetRevision: '{{values.addonChartVersion}}'
           helm:
-            releaseName: '{{values.addonChart}}'
+            releaseName: '{{values.addonChart}}-{{releaseNameSuffix}}'
             ignoreMissingValueFiles: true
             valueFiles:
               - $values/{{metadata.annotations.addons_repo_basepath}}environments/default/addons/{{values.addonChart}}/values.yaml
